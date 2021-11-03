@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "rn-stack-calcuator",
-    "slug": "rn-stack-calcuator",
+    "name": "rn-stack-calculator",
+    "slug": "rn-stack-calculator",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
