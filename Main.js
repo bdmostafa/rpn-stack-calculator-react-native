@@ -1,29 +1,45 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Button from "./Button";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { pressNum, pressEnter, processCalculation } from "./modules";
+import {
+  pressNum,
+  pressEnter,
+  processCalculation,
+  pressClear,
+  pressSwap,
+  processToggle,
+} from "./modules";
 
 const App = ({
   currentState: { stack, inputState },
   pressNum,
   pressEnter,
   processCalculation,
+  pressClear,
+  pressSwap,
+  processToggle,
 }) => {
   // console.log('kkkkk', pressNum, '==========',processCalculation)
   return (
     <View style={styles.container}>
       <View style={styles.top}>
-        <Text style={styles.append}> {stack[2] || 0} </Text>
-        <Text style={styles.append}> {stack[1] || 0} </Text>
-        <Text style={styles[inputState]}>{stack[0] || 0}</Text>
+        <TouchableOpacity onPress={() => processToggle(2)}>
+          <Text style={styles.append}> {stack[2] || 0} </Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => processToggle(1)}>
+          <Text style={styles.append}> {stack[1] || 0} </Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => processToggle(0)}>
+          <Text style={styles[inputState]}>{stack[0] || 0}</Text>
+        </TouchableOpacity>
       </View>
       <View style={styles.bottom}>
         <View style={styles.row}>
-          <Button text="clear" onPress={processCalculation} />
+          <Button text="clear" onPress={pressClear} />
           <Button text="pow" onPress={processCalculation} />
-          <Button text="swap" onPress={processCalculation} />
+          <Button text="swap" onPress={pressSwap} />
           <Button text="/" onPress={processCalculation} />
         </View>
         <View style={styles.row}>
@@ -57,7 +73,17 @@ const App = ({
 export default connect(
   (state) => ({ currentState: state }),
   (dispatch) =>
-    bindActionCreators({ pressNum, pressEnter, processCalculation }, dispatch)
+    bindActionCreators(
+      {
+        pressNum,
+        pressEnter,
+        processCalculation,
+        pressClear,
+        pressSwap,
+        processToggle,
+      },
+      dispatch
+    )
 )(App);
 
 const baseNumber = {
