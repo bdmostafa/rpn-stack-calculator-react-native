@@ -10,19 +10,8 @@ const baseContainer = {
 };
 
 const baseText = {
-  fontSize: 36,
+  fontSize: 26,
 };
-
-const Button = ({ text, special, onPress }) => (
-  <TouchableOpacity
-    onPress={() => onPress(text)}
-    style={special ? styles.specialContainer : styles.container}
-  >
-    <Text style={special ? styles.specialText : styles.text}>{text}</Text>
-  </TouchableOpacity>
-);
-
-export default Button;
 
 const styles = StyleSheet.create({
   container: {
@@ -42,3 +31,15 @@ const styles = StyleSheet.create({
     color: "#fff",
   },
 });
+
+const Button = ({ text, special, onPress }) => (
+  <TouchableOpacity
+    onPress={() => onPress(text)}
+    style={special ? styles.specialContainer : styles.container}
+  >
+    <Text style={special ? styles.specialText : styles.text}>{text}</Text>
+  </TouchableOpacity>
+);
+
+export default Button;
+

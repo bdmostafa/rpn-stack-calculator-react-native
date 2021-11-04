@@ -1,5 +1,11 @@
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Platform,
+} from "react-native";
 import Button from "./Button";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -11,6 +17,47 @@ import {
   pressSwap,
   processToggle,
 } from "./modules";
+
+const baseNumber = {
+  // color: "azure",
+  backgroundColor: "#424242",
+  textAlign: "right",
+  padding: 10,
+  fontSize: 25,
+  fontWeight: "bold",
+  borderBottomWidth: 1,
+  borderColor: "#fff",
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 10,
+    backgroundColor: "skyblue",
+  },
+  top: {
+    paddingTop: Platform.OS === "ios" ? 35 : 25,
+  },
+  bottom: {
+    flex: 1,
+  },
+  row: {
+    flex: 1,
+    flexDirection: "row",
+  },
+  append: {
+    color: "azure",
+    ...baseNumber,
+  },
+  replace: {
+    color: "#2E71E5",
+    ...baseNumber,
+  },
+  push: {
+    color: "greenyellow",
+    ...baseNumber,
+  },
+});
 
 const App = ({
   currentState: { stack, inputState },
@@ -85,54 +132,3 @@ export default connect(
       dispatch
     )
 )(App);
-
-const baseNumber = {
-  // color: "azure",
-  backgroundColor: "#424242",
-  textAlign: "right",
-  padding: 10,
-  fontSize: 30,
-  fontWeight: "bold",
-  borderBottomWidth: 1,
-  borderColor: "#fff",
-};
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 10,
-    backgroundColor: "skyblue",
-  },
-  top: {
-    paddingTop: 25,
-  },
-  bottom: {
-    flex: 1,
-  },
-  // number: {
-  //   color: "azure",
-  //   backgroundColor: "#424242",
-  //   textAlign: "right",
-  //   padding: 10,
-  //   fontSize: 30,
-  //   fontWeight: "bold",
-  //   borderBottomWidth: 1,
-  //   borderColor: "#fff",
-  // },
-  row: {
-    flex: 1,
-    flexDirection: "row",
-  },
-  append: {
-    color: "azure",
-    ...baseNumber,
-  },
-  replace: {
-    color: "#2E71E5",
-    ...baseNumber,
-  },
-  push: {
-    color: "greenyellow",
-    ...baseNumber,
-  },
-});
