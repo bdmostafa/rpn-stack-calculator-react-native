@@ -17,6 +17,7 @@ import {
   pressSwap,
   processToggle,
 } from "./modules";
+import * as Animatable from "react-native-animatable";
 
 const baseNumber = {
   // color: "azure",
@@ -59,63 +60,128 @@ const styles = StyleSheet.create({
   },
 });
 
-const App = ({
-  currentState: { stack, inputState },
-  pressNum,
-  pressEnter,
-  processCalculation,
-  pressClear,
-  pressSwap,
-  processToggle,
-}) => {
-  // console.log('kkkkk', pressNum, '==========',processCalculation)
-  return (
-    <View style={styles.container}>
-      <View style={styles.top}>
-        <TouchableOpacity onPress={() => processToggle(2)}>
-          <Text style={styles.append}> {stack[2] || 0} </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => processToggle(1)}>
-          <Text style={styles.append}> {stack[1] || 0} </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => processToggle(0)}>
-          <Text style={styles[inputState]}>{stack[0] || 0}</Text>
-        </TouchableOpacity>
+class App extends React.Component {
+  render() {
+    const {
+      currentState: { stack, inputState },
+      pressNum,
+      pressEnter,
+      processCalculation,
+      pressClear,
+      pressSwap,
+      processToggle,
+    } = this.props;
+    console.log(this);
+    return (
+      <View style={styles.container}>
+        <View style={styles.top}>
+          <TouchableOpacity onPress={() => processToggle(2)}>
+            <Animatable.Text
+              ref={(ref) => (this.text3 = ref)}
+              style={styles.append}
+            >
+              {" "}
+              {stack[2] || 0}{" "}
+            </Animatable.Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => processToggle(1)}>
+            <Animatable.Text
+              ref={(ref) => (this.text2 = ref)}
+              style={styles.append}
+            >
+              {" "}
+              {stack[1] || 0}{" "}
+            </Animatable.Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => processToggle(0)}>
+            <Animatable.Text
+              ref={(ref) => (this.text1 = ref)}
+              animation="slideInRight"
+              iterationCount={1}
+              direction="alternate"
+              style={styles[inputState]}
+            >
+              {stack[0] || 0}
+            </Animatable.Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.bottom}>
+          <View style={styles.row}>
+            <Button
+              text="clear"
+              onPress={() => (
+                pressClear(),
+                this.text1.shake(500),
+                this.text2.shake(500),
+                this.text3.shake(500)
+              )}
+            />
+            <Button text="pow" onPress={processCalculation} />
+            <Button text="swap" onPress={pressSwap} />
+            <Button
+              text="/"
+              onPress={(x) => (
+                processCalculation(x),
+                this.text1.flipInX(500),
+                this.text2.slideInDown(500)
+              )}
+            />
+          </View>
+          <View style={styles.row}>
+            <Button text="9" onPress={pressNum} />
+            <Button text="8" onPress={pressNum} />
+            <Button text="7" onPress={pressNum} />
+            <Button
+              text="X"
+              onPress={(x) => (
+                processCalculation(x),
+                this.text1.flipInX(500),
+                this.text2.slideInDown(500)
+              )}
+            />
+          </View>
+          <View style={styles.row}>
+            <Button text="6" onPress={pressNum} />
+            <Button text="5" onPress={pressNum} />
+            <Button text="4" onPress={pressNum} />
+            <Button
+              text="-"
+              onPress={(x) => (
+                processCalculation(x),
+                this.text1.flipInX(500),
+                this.text2.slideInDown(500)
+              )}
+            />
+          </View>
+          <View style={styles.row}>
+            <Button text="3" onPress={pressNum} />
+            <Button text="2" onPress={pressNum} />
+            <Button text="1" onPress={pressNum} />
+            <Button
+              text="+"
+              onPress={(x) => (
+                processCalculation(x),
+                this.text1.flipInX(500),
+                this.text2.slideInDown(500)
+              )}
+            />
+          </View>
+          <View style={styles.row}>
+            <Button text="0" onPress={pressNum} />
+            <Button text="." onPress={pressNum} />
+            <Button
+              text="enter"
+              special
+              onPress={() => (
+                pressEnter(), this.text1.slideInUp(500), this.text2.flipInX(500)
+              )}
+            />
+          </View>
+        </View>
       </View>
-      <View style={styles.bottom}>
-        <View style={styles.row}>
-          <Button text="clear" onPress={pressClear} />
-          <Button text="pow" onPress={processCalculation} />
-          <Button text="swap" onPress={pressSwap} />
-          <Button text="/" onPress={processCalculation} />
-        </View>
-        <View style={styles.row}>
-          <Button text="9" onPress={pressNum} />
-          <Button text="8" onPress={pressNum} />
-          <Button text="7" onPress={pressNum} />
-          <Button text="X" onPress={processCalculation} />
-        </View>
-        <View style={styles.row}>
-          <Button text="6" onPress={pressNum} />
-          <Button text="5" onPress={pressNum} />
-          <Button text="4" onPress={pressNum} />
-          <Button text="-" onPress={processCalculation} />
-        </View>
-        <View style={styles.row}>
-          <Button text="3" onPress={pressNum} />
-          <Button text="2" onPress={pressNum} />
-          <Button text="1" onPress={pressNum} />
-          <Button text="+" onPress={processCalculation} />
-        </View>
-        <View style={styles.row}>
-          <Button text="0" onPress={pressNum} />
-          <Button text="." onPress={pressNum} />
-          <Button text="enter" special onPress={pressEnter} />
-        </View>
-      </View>
-    </View>
-  );
-};
+    );
+  }
+}
 
 export default connect(
   (state) => ({ currentState: state }),

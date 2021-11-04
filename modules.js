@@ -66,7 +66,7 @@ const initialState = { stack: [], inputState: "replace" };
 // c = [...a, ...b];
 // d = [1, 3, 2];
 export const reducer = (state = initialState, { type, payload }) => {
-  console.log(state.stack, type, payload);
+  // console.log(state.stack, type, payload);
   switch (type) {
     case CALCULATION:
       return {
