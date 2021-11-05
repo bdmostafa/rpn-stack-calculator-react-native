@@ -1,12 +1,14 @@
 {
   "expo": {
-    "name": "rpn-stack-calculator",
+    "name": "RPN Stack Calculator",
     "slug": "rpn-stack-calculator",
+    "privacy": "public",
     "version": "1.0.0",
     "orientation": "portrait",
+    "description": "This is a stack RPN calculator built with React Native",
     "icon": "./assets/icon.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/splash.jpg",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
