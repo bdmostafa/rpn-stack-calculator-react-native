@@ -71,7 +71,7 @@ class App extends React.Component {
       pressSwap,
       processToggle,
     } = this.props;
-    console.log(this);
+
     return (
       <View style={styles.container}>
         <View style={styles.top}>
@@ -79,6 +79,7 @@ class App extends React.Component {
             <Animatable.Text
               ref={(ref) => (this.text3 = ref)}
               style={styles.append}
+              numberOfLines={1}
             >
               {" "}
               {stack[2] || 0}{" "}
@@ -88,6 +89,7 @@ class App extends React.Component {
             <Animatable.Text
               ref={(ref) => (this.text2 = ref)}
               style={styles.append}
+              numberOfLines={1}
             >
               {" "}
               {stack[1] || 0}{" "}
@@ -100,6 +102,7 @@ class App extends React.Component {
               iterationCount={1}
               direction="alternate"
               style={styles[inputState]}
+              numberOfLines={1}
             >
               {stack[0] || 0}
             </Animatable.Text>

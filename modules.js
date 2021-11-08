@@ -57,6 +57,19 @@ const toggleNegative = (num) => {
   return `-${num}`;
 };
 
+// Check Points (dots) and leading zeros
+const checkMultiplePointsAndZeros = (num) => {
+  return (
+    num
+      .replace(/[^0-9.-]/g, "")
+      .replace(".", "x")
+      .replace(/\./g, "")
+      .replace("x", ".")
+      // .replace(/(?!^)-/g, "")
+      .replace(/^0+(\d)/gm, "$1")
+  );
+};
+
 const initialState = { stack: [], inputState: "replace" };
 // inputState would be append or replace or push
 
@@ -69,13 +82,15 @@ export const reducer = (state = initialState, { type, payload }) => {
   // console.log(state.stack, type, payload);
   switch (type) {
     case CALCULATION:
+      const x = !isNaN(parseFloat(state.stack[0]))
+        ? parseFloat(state.stack[0])
+        : 0;
+      const y = !isNaN(parseFloat(state.stack[1]))
+        ? parseFloat(state.stack[1])
+        : 0;
       return {
         stack: [
-          `${getCalculatedValue(
-            parseFloat(state.stack[0]),
-            parseFloat(state.stack[1]),
-            payload
-          )}`,
+          `${getCalculatedValue(x, y, payload)}`,
           ...state.stack.slice(2),
         ],
         inputState: "push",
@@ -106,9 +121,11 @@ export const reducer = (state = initialState, { type, payload }) => {
 
     case PRESS_NUM:
       if (state.inputState === "append") {
+        const num = (state.stack[0] || "0") + payload;
+
         return {
           ...state,
-          stack: [(state.stack[0] || "0") + payload, ...state.stack.slice(1)],
+          stack: [checkMultiplePointsAndZeros(num), ...state.stack.slice(1)],
           inputState: "append",
         };
       } else if (state.inputState === "replace") {
